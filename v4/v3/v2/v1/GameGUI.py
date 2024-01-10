@@ -9,13 +9,19 @@ from item import Item
 from character import Character
 
 class GameGUI(tk.Tk):
-    def __init__(self, game, master=None):
-        super().__init__(master)
-        self.master = master
+    def __init__(self, game):
+        super().__init__()
+        self.title("Text-Based Adventure Game")
+        self.geometry("800x600")
+        self.setup_gui()
         self.game = game
         self.game.set_game_gui(self)  # Set the GUI instance for the game
-        self.grid()
-        self.setup_gui()
+
+        # Prompt the user to enter their name
+        self.player_name = simpledialog.askstring("Nom du joueur", "Entrez votre nom:")
+        if not self.player_name:
+            self.player_name = "Aventurier"
+
 
     def setup_gui(self):
         self.output_text = Text(self, wrap=tk.WORD, height=20, width=80)
@@ -295,19 +301,7 @@ class Game:
 
 def main():
     game = Game()
-
-    # Create the player name window
-    name_window = tk.Tk()
-    name_gui = GameGUI(game, master=name_window)
-    name_game = Game()
-    name_gui.set_game_gui(name_game)  # Set the GUI instance for the game
-    name_game.setup()
-    name_gui.print_welcome()
-    name_gui.run()
-
-    # Continue with the game window
-    game_window = tk.Tk()
-    gui = GameGUI(game, master=game_window)
+    gui = GameGUI(game)
     game.set_game_gui(gui)  # Set the GUI instance for the game
     game.setup()
     gui.print_welcome()
