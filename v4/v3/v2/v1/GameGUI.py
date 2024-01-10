@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter as ttk
-from tkinter import Text, Entry, Scrollbar,END,Tk,Frame,Button
+from tkinter import Text, Entry, Scrollbar,END,Tk,Frame,Button,simpledialog
 from room import Room
 from player import Player
 from command import Command
@@ -9,13 +9,13 @@ from item import Item
 from character import Character
 
 class GameGUI(tk.Tk):
-    def __init__(self, game):
-        super().__init__()
-        self.title("Text-Based Adventure Game")
-        self.geometry("800x600")
-        self.setup_gui()
+    def __init__(self, game, master=None):
+        super().__init__(master)
+        self.master = master
         self.game = game
         self.game.set_game_gui(self)  # Set the GUI instance for the game
+        self.grid()
+        self.setup_gui()
 
     def setup_gui(self):
         self.output_text = Text(self, wrap=tk.WORD, height=20, width=80)
@@ -63,6 +63,13 @@ class GameGUI(tk.Tk):
             self.output_text.yview(tk.END)
 
     def run(self):
+        # Prompt the user to enter their name
+        self.player_name = simpledialog.askstring("Nom du joueur", "Entrez votre nom:")
+        if not self.player_name:
+            self.player_name = "Aventurier"
+
+        # Continue with the rest of the initialization
+        self.print_welcome()
         self.mainloop()
 class Game:
     def __init__(self):
@@ -104,13 +111,11 @@ class Game:
         self.rooms.append(Beyrouth)
         Venice = Room("Venice", "dans une grotte profonde et sombre. Des voix semblent provenir des profondeurs.")
         self.rooms.append(Venice)
-        Istanbul = Room("Istanbul",
-                        "dans un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
+        Istanbul = Room("Istanbul","dans un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
         self.rooms.append(Istanbul)
         NewYork = Room("NewYork", "dans un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.")
         self.rooms.append(NewYork)
-        Tokyo = Room("Tokyo",
-                     "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Tokyo = Room("Tokyo","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
         self.rooms.append(Tokyo)
         Barcelone = Room("Barcelone","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
         self.rooms.append(Barcelone)
@@ -120,40 +125,126 @@ class Game:
         self.rooms.append(Paris)
         Caire = Room("Paris","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
         self.rooms.append(Caire)
-        statutdeliberte = Room("statutdeliberte",
-                               "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        statutdeliberte = Room("statutdeliberte", "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
         self.rooms.append(statutdeliberte)
-        gondole = Room("gondole",
-                       "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        gondole = Room("gondole","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
         self.rooms.append(gondole)
-        pyramide = Room("pyramide",
-                        "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        pyramide = Room("pyramide","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
         self.rooms.append(pyramide)
-        Fuji = Room("fuji",
-                    "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Fuji = Room("fuji","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
         self.rooms.append(Fuji)
 
-        # Créer des PNJ
-        npc1 = Character("NPC1", "Un personnage non joueur mystérieux.", aéroport,
-                         ["Bonjour, aventurier.", "Je peux vous donner des conseils."])
-        self.characters.append(npc1)
-        npc2 = Character("NPC2", "Un autre personnage non joueur énigmatique.", Istanbul,
-                         ["Bienvenue dans ce monde fantastique.", "Vous êtes courageux de voyager seul."])
-        self.characters.append(npc2)
-        # Ajouter des PNJ à certaines pièces
-        aéroport.characters.append(npc1)
-        Istanbul.characters.append(npc2)
+        # Setup characters qui donnent indices
+        le_chat_bleu = Character("Le Chat Bleu", "un chat mystérieux", aéroport, ["Bienvenue à toi jeune voyageur! Tu a été choisi pour une quête extraordinaire. Tu devras récupérer six fragments à travers le monde pour forger une clef. Chaque fragment que tu découvriras te rapprochera du trésor final, un mystérieux coffre scellé. Cependant, le chemin vers le coffre reste caché, c’est à toi seul de le trouver. A chaque endroit où se trouve un fragment, une personne du pays te donnera un indice qui t’amènera au fragment suivant. Voici ton premier indice : ton périple commence là où la flamme de la liberté danse face au vent. Trouve l'île où les rêves s'envolent vers le ciel pour découvrir le premier fragment. Bonne chance, aventurier ! Que l'aventure commence!"])
 
-        # Initialize items
-        sword = Item("sword", "A sharp sword.")
-        key = Item("key", "A small key.")
-        potion = Item("potion", "A healing potion.")
+        Will = Character("Will", "l’américain", NewYork, ["Hello ! Cherche le lieu où l'aube caresse des sommets majestueux, comme si elle éveillait des vagues de montagnes. Là-bas, dans cette terre où les sakuras fleurissent, tu découvriras le fragment suivant, caché sous l'ombre d’une majesté silencieuse."])
+        Xiao = Character("Xiao", "le japonais", Tokyo, ["Konnichiwa! Pour poursuivre ta quête, envole-toi vers la ville où l'amour flotte dans l'air, et les lumières de la tour brillent de mille feux. C'est là que le prochain fragment t'attend. "])
+        Léa = Character("Léa", "la française", Paris, ["Bonjour! Cherche le lieu où l'Orient rencontre l'Occident. Trouve la porte vers l'Est méditerranéen où les saveurs exotiques dansent avec les parfums de l'histoire ancienne et tu découvriras le chemin vers le prochain fragment."])
+        Elias = Character("Elias", "le libanais", Beyrouth, [" Ahlan wa sahlan ! Pour approcher le prochain fragment, suis la trace des civilisations anciennes. Cherche le lieu où les mystères du passé te guideront vers une terre ensoleillée où des constructions millénaires se dressent comme des énigmes à dévoiler. Là-bas, au cœur de l'antiquité, ton voyage continuera dans les profondeurs des secrets bien gardés."])
+        Cleo = Character("Cleo", "l’égyptienne", Caire, ["Marhaban ! Au cœur de ce désert rempli d’histoire, ta quête touche à sa fin. Cherche le lieu où les ombres du passé convergent vers une terre hispanique de passion et de fête, où les œuvres humaines rivalisent avec la grandeur des étoiles. Ton ultime fragment t'attend dans une cité célèbre pour son architecture extraordinaire et son ambiance vibrante. "])
+        Camille=Character("Camille","l'exploratrice intrépide",Fuji,["Salutations ! Si vous cherchez le prochain indice, aventurez-vous là où les brises légères caressent les cerisiers en fleurs. Dans cette terre où les sakuras s'épanouissent, vous découvrirez le fragment caché sous l'ombre d'une majesté silencieuse."])
+        # Setup characters qui bougent dans la map
+        Maria = Character("Maria", "l’espagnole", Barcelone, ["Hola ! Soy Maria, une Barcelonaise passionnée de cuisine. Mes journées sont rythmées par le parfum des tapas, les couleurs du marché de La Boqueria et les doux sons du flamenco. J'adore me promener le long de la plage et savourer une bonne paella. Si tu veux des conseils pour dénicher les meilleures saveurs de Barcelone, n'hésite pas !"])
+        Mario = Character("Mario", "l’italien", Venice, ["Ciao! Sono Mario, un Vénitien naviguant à travers les canaux de cette ville magnifique. Mes journées sont remplies de gondoles, de masques vénitiens et d'une bonne dose de café italien. J'adore partager les histoires de cette ville unique et secrète. Si tu veux savoir où trouver les meilleurs cicchetti ou simplement discuter, sono qui!"])
+        Volodimir = Character("Volodimir", "le russe", Moscou, ["Privet ! Je suis Volodimir, un amoureux de l'histoire de ma ville. Mes journées se déroulent au son des cloches des églises et parmi les pages de livres anciens. Né à Moscou, j'aime me promener dans les vastes parcs et profiter de l'architecture impressionnante. Si tu veux en savoir plus sur la vie à Moscou, n'hésite pas à me demander!"])
+        Ozan = Character("Ozan", "le turc", Istanbul, ["Merhaba! Je suis Ozan, un passionné de musique et d'aventure. Mes journées sont une symphonie entre les ruelles animées du Grand Bazar, les rives du Bosphore et les sons envoûtants du saz. Né à Istanbul, je trouve toujours de nouvelles mélodies dans cette ville fascinante. Si tu veux partager des histoires ou simplement discuter, je suis là pour toi!"])
+
+        aéroport.characters.append(le_chat_bleu)
+        Istanbul.characters.append(Ozan)
+        Fuji.characters.append(Camille)
+        Moscou.characters.append(Volodimir)
+        Barcelone.characters.append(Maria)
+        Beyrouth.characters.append(Elias)
+        NewYork.characters.append(Will)
+        Caire.characters.append(Cleo)
+        Tokyo.characters.append(Xiao)
+        Paris.characters.append(Léa)
+        Venice.characters.append(Mario)
+        Fuji.characters.append(Camille)
+        # Setup Items
+
+        # NeW York
+        fragment1 = Item("Fragment1", "Morceau mystérieux")
+        flambeau = Item("Flambeau","Torche emblématique de la Statue de la Liberté, symbole de lumière, liberté, et exploration ")
+        # Mont Fuji
+        fragment2 = Item("Fragment2", "Morceau mystérieux")
+        fleur_de_sakura = Item("Fleur de Sakura","Une délicate fleur de cerisier, symbole de beauté éphémère et de renouveau. ")
+        # Paris
+        fragment3 = Item("Fragment3", "Morceau mystérieux")
+        baguette = Item("Baguette","Pain emblématique de Paris, croustillant à souhait, transportant les aventuriers au cœur des rues parisiennes. ")
+        croissant = Item("Croissant", "Un délicieux croissant, emblème de la pâtisserie française ")
+        macaron = Item("Macaron", "Un macaron coloré, doux et délicieux, originaire de la pâtisserie française.")
+        # Beyrouth
+        fragment4 = Item("Fragment4", "Morceau mystérieux")
+        darbouka = Item("Darbouka", "Un tambourin oriental, invitant à des rythmes envoûtants.")
+        baklava = Item("Baklava", "Un délice sucré, composé de couches de pâte filo et de noix, imprégné de miel.")
+        # LeCaire
+        scorpion = Item("Scorpion", "Un petit scorpion, rappelant le désert et ses créatures mystérieuses.")
+        serpent = Item("Serpent", "Un serpent, symbole de sagesse et de mystère.")
+        lampe_d_Aladin = Item("Lampe d’Aladin", "Une lampe magique, prête à exaucer des vœux .")
+        # Pyramide
+        fragment5 = Item("Fragment5", "Morceau mystérieux")
+        momie = Item("Momie", "Une momie ancienne, gardienne de secrets enfouis depuis des siècles. ")
+        trésor = Item("Trésor", "Un coffre au trésor scellé, promettant richesse et aventures.")
+        amulette = Item("Amulette", "Un talisman mystique, porteur de bonnes énergies et de protections. ")
+        # Barcelone
+        fragment6 = Item("Fragment6", "Morceau mystérieux")
+        paella = Item("Paella", "Un plat espagnol traditionnel, riche en saveurs et en couleurs.")
+        churros_con_chocolate = Item("Churros con chocolate","Délicieux beignets espagnols accompagnés d'une riche sauce au chocolat. ")
+        tapas = Item("Tapas", "Une variété de petites bouchées espagnoles, offrant une explosion de saveurs.")
+        # Venise
+        masque_vénitien = Item("Masque vénitien","Un masque élaboré, utilisé lors du carnaval vénitien, porteur de mystère et de grâce.")
+        chapeau = Item("Chapeau", "Un chapeau élégant, reflétant le style et la personnalité de son porteur.")
+        # Gondole
+        coffre = Item("Coffre", "Un coffre mystérieux, renfermant des secrets et des richesses inconnues.")
+        pagaie = Item("Pagaie", "Une pagaie, prête à être utilisée pour naviguer sur des eaux inexplorées. ")
+        # Moscou
+        poupées_russe = Item("Poupées russe", "Une série de poupées emboîtées, cachant des surprises à chaque ouverture. ")
+        chapka = Item("Chapka", "Un chapeau russe traditionnel, conçu pour affronter les hivers rigoureux.")
+        # Istanbul
+        loukoum = Item("Loukoum", "Des délices turcs, doux et parfumés, éveillant les papilles.")
+        vase_ancien = Item("Vase ancien", "Un vase orné d'artefacts anciens, racontant des histoires du passé. ")
+        bijoux = Item("Bijoux", "Des parures étincelantes, témoins de l'élégance et de la richesse.")
+        assiettes = Item("Assiettes", "Des assiettes décoratives, portant des motifs artistiques et culturels. ")
+        #Tokyo
+        ramen_bowl = Item("Bol de Ramen", "Un bol débordant de ramen délicieusement parfumé, une spécialité tokyoïte.")
+        manga_collection = Item("Collection de Manga","Une collection variée de mangas, représentant la richesse de la culture pop à Tokyo.")
+        sakura_bonsai = Item("Bonsaï de Sakura","Un magnifique bonsaï de sakura en fleurs, capturant l'essence de la saison des cerisiers en fleurs.")
+        tech_gadget = Item("Gadget Technologique","Un gadget high-tech dernier cri, symbole de l'innovation constante de Tokyo.")
 
         # Add items to specific rooms
-        aéroport.inventory.append(sword)
-        Beyrouth.inventory.append(key)
-        Venice.inventory.append(potion)
-
+        aéroport.inventory.append(coffre)
+        aéroport.inventory.append(pagaie)
+        Beyrouth.inventory.append(fragment4)
+        Beyrouth.inventory.append(darbouka)
+        Beyrouth.inventory.append(baklava)
+        Venice.inventory.append(masque_vénitien)
+        Venice.inventory.append(chapeau)
+        Istanbul.inventory.append(loukoum)
+        Istanbul.inventory.append(bijoux)
+        Istanbul.inventory.append(assiettes)
+        Istanbul.inventory.append(vase_ancien)
+        Caire.inventory.append(scorpion)
+        Caire.inventory.append(serpent)
+        pyramide.inventory.append(momie)
+        pyramide.inventory.append(trésor)
+        pyramide.inventory.append(amulette)
+        Tokyo.inventory.append(sakura_bonsai)
+        Tokyo.inventory.append(tech_gadget)
+        Paris.inventory.append(baguette)
+        Paris.inventory.append(croissant)
+        Paris.inventory.append(macaron)
+        Paris.inventory.append(fragment3)
+        NewYork.inventory.append(fragment1)
+        NewYork.inventory.append(flambeau)
+        Barcelone.inventory.append(paella)
+        Barcelone.inventory.append(churros_con_chocolate)
+        Barcelone.inventory.append(tapas)
+        Barcelone.inventory.append(fragment6)
+        Moscou.inventory.append(poupées_russe)
+        Moscou.inventory.append(chapka)
+        Fuji.inventory.append(fragment2)
+        Fuji.inventory.append(fleur_de_sakura)
         # Create exits for rooms
 
         aéroport.exits = {"N": Paris, "E": Beyrouth, "S": Barcelone, "O": NewYork, "U": None, "D": None}
@@ -204,7 +295,19 @@ class Game:
 
 def main():
     game = Game()
-    gui = GameGUI(game)
+
+    # Create the player name window
+    name_window = tk.Tk()
+    name_gui = GameGUI(game, master=name_window)
+    name_game = Game()
+    name_gui.set_game_gui(name_game)  # Set the GUI instance for the game
+    name_game.setup()
+    name_gui.print_welcome()
+    name_gui.run()
+
+    # Continue with the game window
+    game_window = tk.Tk()
+    gui = GameGUI(game, master=game_window)
     game.set_game_gui(gui)  # Set the GUI instance for the game
     game.setup()
     gui.print_welcome()
