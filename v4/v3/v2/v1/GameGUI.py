@@ -7,6 +7,7 @@ from command import Command
 from actions import Actions
 from item import Item
 from character import Character
+from game import Game
 
 class GameGUI(tk.Tk):
     def __init__(self, game):
@@ -19,8 +20,7 @@ class GameGUI(tk.Tk):
 
         # Prompt the user to enter their name
         self.player_name = simpledialog.askstring("Nom du joueur", "Entrez votre nom:")
-        if not self.player_name:
-            self.player_name = "Aventurier"
+
 
 
     def setup_gui(self):
@@ -45,11 +45,10 @@ class GameGUI(tk.Tk):
         self.scrollbar.config(command=self.output_text.yview)
 
     def print_welcome(self):
-        welcome_message = (
-            "Bienvenue dans ce jeu d'aventure !\n"
-            "Entrez 'help' si vous avez besoin d'aide.\n"
-            "Vous êtes actuellement dans une pièce mystérieuse."
-        )
+        airport_description = self.game.player.current_room.get_long_description()
+        welcome_message = f"Bienvenue dans ce jeu d'aventure ! {airport_description}\n"
+
+        welcome_message += "Entrez 'help' si vous avez besoin d'aide."
         self.print_to_output(welcome_message)
 
     def print_to_output(self, message):
@@ -69,13 +68,6 @@ class GameGUI(tk.Tk):
             self.output_text.yview(tk.END)
 
     def run(self):
-        # Prompt the user to enter their name
-        self.player_name = simpledialog.askstring("Nom du joueur", "Entrez votre nom:")
-        if not self.player_name:
-            self.player_name = "Aventurier"
-
-        # Continue with the rest of the initialization
-        self.print_welcome()
         self.mainloop()
 class Game:
     def __init__(self):
@@ -111,35 +103,34 @@ class Game:
         self.commands["look"] = look
         # Setup rooms
 
-        aéroport = Room("aéroport","dans une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.")
+        aéroport = Room("aéroport", "à l'aéroport : un carrefour mondial, où des histoires commencent et se terminent.")
         self.rooms.append(aéroport)
-        Beyrouth = Room("Beyrouth", "dans une immense tour en pierre qui s'élève au dessus des nuages.")
+        Beyrouth = Room("Beyrouth", "à Beyrouth dans un restaurant animé: lieu festif, mélange de saveurs, de musique et de rires. ")
         self.rooms.append(Beyrouth)
-        Venice = Room("Venice", "dans une grotte profonde et sombre. Des voix semblent provenir des profondeurs.")
+        Venice = Room("Venice", "à Venise sur le pont du Rialto: arc architectural élégant sur le Grand Canal, témoin de la splendeur vénitienne. ")
         self.rooms.append(Venice)
-        Istanbul = Room("Istanbul","dans un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
+        Istanbul = Room("Istanbul", "à Istambul dans un souk: labyrinthe coloré, vibrant de la vie d'Istanbul, où chaque coin raconte une histoire marchande. ")
         self.rooms.append(Istanbul)
-        NewYork = Room("NewYork", "dans un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.")
+        NewYork = Room("NewYork", "à New York dans Times Square: nœud animé de lumières, de mouvements et d'activités au cœur de la Grosse Pomme.")
         self.rooms.append(NewYork)
-        Tokyo = Room("Tokyo","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Tokyo = Room("Tokyo", "à Tokyo dans un temple: un sanctuaire silencieux, gardien de traditions millénaires, où les samouraïs illustrent l'harmonie entre le passé et le présent.")
         self.rooms.append(Tokyo)
-        Barcelone = Room("Barcelone","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Barcelone = Room("Barcelone", "à Barcelone dans un bar à tapas: ambiance vibrante, épicentre des saveurs espagnoles, où les tapas se partagent joyeusement.")
         self.rooms.append(Barcelone)
-        Moscou = Room("Moscou","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Moscou = Room("Moscou", "à Moscou sur la place Rouge: centre historique entouré d'architecture imposante et de traditions russes.")
         self.rooms.append(Moscou)
-        Paris = Room("Paris","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Paris = Room("Paris", "à Paris dans une boulangerie d'un grand pâtissier: doux refuge de délices parisiens, où les senteurs du pain fraîchement cuit enrobent l'air.")
         self.rooms.append(Paris)
-        Caire = Room("Paris","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Caire = Room("Caire", "au Caire dans le désert : étendue infinie de sable, berceau des pyramides, enveloppée dans un silence ancien. ")
         self.rooms.append(Caire)
-        statutdeliberte = Room("statutdeliberte", "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        statutdeliberte = Room("Satue de la liberté", "sur la statue de la Liberté: majestueuse sentinelle de la liberté, levant fièrement sa torche au cœur de New York. ")
         self.rooms.append(statutdeliberte)
-        gondole = Room("gondole","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        gondole = Room("gondole", "dans une gondole: embarcation élégante sillonnant les canaux de Venise, portant avec elle l'esprit romantique de la ville.")
         self.rooms.append(gondole)
-        pyramide = Room("pyramide","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        pyramide = Room("pyramide", "dans une pyramide: un labyrinthe mystique d'antichambres secrètes et de passages cachés, où les échos du passé résonnent et les hiéroglyphes racontent des légendes oubliées.")
         self.rooms.append(pyramide)
-        Fuji = Room("fuji","dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
+        Fuji = Room("Mont Fuji", "au Mont Fuji: pic majestueux dominant le paysage japonais, source d'inspiration artistique et spirituelle depuis des siècles.")
         self.rooms.append(Fuji)
-
         # Setup characters qui donnent indices
         le_chat_bleu = Character("Le Chat Bleu", "un chat mystérieux", aéroport, ["Bienvenue à toi jeune voyageur! Tu a été choisi pour une quête extraordinaire. Tu devras récupérer six fragments à travers le monde pour forger une clef. Chaque fragment que tu découvriras te rapprochera du trésor final, un mystérieux coffre scellé. Cependant, le chemin vers le coffre reste caché, c’est à toi seul de le trouver. A chaque endroit où se trouve un fragment, une personne du pays te donnera un indice qui t’amènera au fragment suivant. Voici ton premier indice : ton périple commence là où la flamme de la liberté danse face au vent. Trouve l'île où les rêves s'envolent vers le ciel pour découvrir le premier fragment. Bonne chance, aventurier ! Que l'aventure commence!"])
 
@@ -166,7 +157,6 @@ class Game:
         Tokyo.characters.append(Xiao)
         Paris.characters.append(Léa)
         Venice.characters.append(Mario)
-        Fuji.characters.append(Camille)
         # Setup Items
 
         # NeW York
@@ -220,7 +210,7 @@ class Game:
 
         # Add items to specific rooms
         aéroport.inventory.append(coffre)
-        aéroport.inventory.append(pagaie)
+        Venice.inventory.append(pagaie)
         Beyrouth.inventory.append(fragment4)
         Beyrouth.inventory.append(darbouka)
         Beyrouth.inventory.append(baklava)
@@ -251,6 +241,7 @@ class Game:
         Moscou.inventory.append(chapka)
         Fuji.inventory.append(fragment2)
         Fuji.inventory.append(fleur_de_sakura)
+        gondole.inventory.append(coffre)
         # Create exits for rooms
 
         aéroport.exits = {"N": Paris, "E": Beyrouth, "S": Barcelone, "O": NewYork, "U": None, "D": None}

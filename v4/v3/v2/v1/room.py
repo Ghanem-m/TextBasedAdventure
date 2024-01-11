@@ -11,7 +11,6 @@ class Room:
         self.inventory =[]
     # Define the get_exit method.
     def get_exit(self, direction):
-
         # Return the room in the given direction if it exists.
         if direction in self.exits.keys():
             return self.exits[direction]
@@ -37,11 +36,7 @@ class Room:
     # Return a long description of this room including exits.
 
     def get_long_description(self):
-        description = f"\n{self.name}\n{self.description}\n"
-
-
-
-
+        description = f"\n{self.name}\n{self.description}\n\n{self.get_exit_string()}\n"
         return description
 
     def display_inventory(self):
