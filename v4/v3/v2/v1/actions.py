@@ -42,12 +42,14 @@ class Actions:
         # Validate the direction
         valid_directions = ['N', 'E', 'S', 'O', 'D', 'U', 'OUEST', 'NORD', 'EST', 'SUD', 'back']
         if direction not in [d.upper() for d in valid_directions]:
-            print("Direction invalide. Veuillez entrer une direction valide (N, E, S, O, D, U).")
+            invalid_message ="Direction invalide. Veuillez entrer une direction valide (N, E, S, O, D, U)."
+            game.gui.display_message(invalid_message)
             return False
 
         # Get the current room and the destination room
         current_room = player.current_room
         destination_room = current_room.get_exit(direction)
+
 
         # Check if the destination room is valid
         if destination_room is not None:
@@ -56,9 +58,11 @@ class Actions:
 
             # Update the GUI with the new room description
             game.gui.display_message(player.current_room.get_long_description())
+            game.gui.display_message(player.get_history())
             return True
         else:
-            print("Il n'y a pas de sortie dans cette direction.")
+            No_direction= "Il n'y a pas de sortie dans cette direction."
+            game.gui.display_message(No_direction)
             return False
 
     @staticmethod
@@ -80,7 +84,13 @@ class Actions:
 
         player = game.player
         msg = f"\nMerci {player.name} d'avoir joué. Au revoir.\n"
-        print(msg)
+
+        # Check if the game has a gui instance and use it to display the message
+        if game.gui:
+            game.gui.print_to_output(msg)
+        else:
+            print(msg)
+
         game.finished = True
         return True
 
@@ -114,12 +124,12 @@ class Actions:
 
         # If there are extra parameters, print an error message and return False.
         if len(parameters) != 0:
-            print("La commande 'back' ne prend aucun paramètre.")
+            game.gui.display_message("La commande 'back' ne prend aucun paramètre.")
             return False
 
         # If there is no history of previous rooms, print an error message and return False.
         if len(player.history) < 1:
-            print("\nIl n'y a pas de pièce précédente à laquelle revenir.\n")
+            game.gui.display_message("\nIl n'y a pas de pièce précédente à laquelle revenir.\n")
             return False
 
         # Move the player to the previous room.
@@ -142,6 +152,31 @@ class Actions:
             return "\n".join(messages)
         else:
             return "Il n'y a personne avec qui parler ici."
+    def open(game, parameters):  # Define 'open' as a static method within the 'Actions' class
+        if "coffre" in parameters:
+            player = game.player
+
+            # Check if the player has fragments in their inventory
+            expected_fragments = ["Fragment1", "Fragment2", "Fragment3", "Fragment4", "Fragment5", "Fragment6"]
+
+            collected_fragments = [item.name for item in player.inventory]
+
+            if all(fragment in collected_fragments for fragment in expected_fragments):
+                player.current_room.chest_unlocked = True
+                # Unlock the chest and provide rewards
+                game.gui.display_message("Félicitations {self.player.name}  les six fragments que tu as persévéré à trouver ont fusionné en une clef puissante, ouvrant le mystérieux coffre. En un éclat de lumière, le coffre s'ouvre, révélant son précieux trésor - l'eau de la Fontaine de Jouvence. Ton courage et ta détermination ont triomphé. Grâce à cette eau magique, tu as trouvé la clé de l'éternelle jeunesse. Que cette victoire marque le début d'une nouvelle aventure pleine de découvertes et de merveilles. Bravo, héros, pour avoir conquis La Quête des Fragments du Monde et pour avoir révélé les mystères enfouis dans le coffre légendaire")
+                return
+            else:
+                game.gui.display_message("Oh malheureux voyageur! Errant parmi les trésors éparpillés, tu as échappé à la règle ! Les objets inattendus, bien que séduisants, ne doivent pas te dévier de ton destin. Les fragments, eux, doivent être récupérés dans une séquence précise pour ne pas briser l’harmonie.")
+        else:
+            return "Vous ne pouvez pas ouvrir cela."
+
+        success = False  # Replace this with your actual logic
+
+        if not success:
+            game.game_over = True  # Set the game_over flag in the Game class
+
+        return "Your result message here"
 
     @staticmethod
     def take(game, parameters):

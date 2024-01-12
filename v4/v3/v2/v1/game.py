@@ -19,6 +19,9 @@ class Game:
         self.characters = []
         self.gui = None
         self.player = None
+        self.game_over = False  # Add a game_over flag
+
+
 
 
     def setup(self):
@@ -43,6 +46,8 @@ class Game:
         self.commands["check"] = check
         look= Command("look", " : observer la pièce actuelle", Actions.look, 0)
         self.commands["look"] = look
+        open_command = Command("open", " <item>: ouvrir un objet", Actions.open, 1)
+        self.commands["open"]=open_command
         # Setup rooms
 
         aéroport = Room("aéroport", "à l'aéroport : un carrefour mondial, où des histoires commencent et se terminent.")
@@ -65,7 +70,7 @@ class Game:
         self.rooms.append(Paris)
         Caire = Room("Caire", "au Caire dans le désert : étendue infinie de sable, berceau des pyramides, enveloppée dans un silence ancien. ")
         self.rooms.append(Caire)
-        statutdeliberte = Room("Satue de la liberté", "sur la statue de la Liberté: majestueuse sentinelle de la liberté, levant fièrement sa torche au cœur de New York. ")
+        statutdeliberte = Room("Statue de la liberté", "sur la statue de la Liberté: majestueuse sentinelle de la liberté, levant fièrement sa torche au cœur de New York. ")
         self.rooms.append(statutdeliberte)
         gondole = Room("gondole", "dans une gondole: embarcation élégante sillonnant les canaux de Venise, portant avec elle l'esprit romantique de la ville.")
         self.rooms.append(gondole)
@@ -99,7 +104,6 @@ class Game:
         Tokyo.characters.append(Xiao)
         Paris.characters.append(Léa)
         Venice.characters.append(Mario)
-        Fuji.characters.append(Camille)
         # Setup Items
 
         # NeW York
@@ -184,6 +188,7 @@ class Game:
         Moscou.inventory.append(chapka)
         Fuji.inventory.append(fragment2)
         Fuji.inventory.append(fleur_de_sakura)
+        pyramide.inventory.append(fragment5)
         # Create exits for rooms
 
         aéroport.exits = {"N": Paris, "E": Beyrouth, "S": Barcelone, "O": NewYork, "U": None, "D": None}
@@ -221,12 +226,14 @@ class Game:
             return f"\nCommande '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n"
         else:
             command = self.commands[command_word]
-            return command.action(self, list_of_words[1:])
+            response = command.action(self, list_of_words[1:])
+            if self.game_over:
+                response += "\nLe jeu est terminé. Vous avez échoué à ouvrir le coffre."
+            return response
 
     def print_welcome(self):
-        welcome_message = (
-            f"\nBienvenue {self.player.name} dans ce jeu d'aventure !\n"
-            "Entrez 'help' si vous avez besoin d'aide.\n"
-            f"{self.player.current_room.get_long_description()}"
-        )
+        airport_description = self.player.current_room.get_long_description()
+        welcome_message = f"Bienvenue dans ce jeu d'aventure ! {airport_description}\n"
+
+        welcome_message += "Entrez 'help' si vous avez besoin d'aide."
         self.gui.print_to_output(welcome_message)

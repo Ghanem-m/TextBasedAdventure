@@ -2,13 +2,15 @@
 class Player():
 
     # Define the constructor.
-    def __init__(self, name, starting_room=None,):
+    def __init__(self, name, starting_room=None):
         self.name = name
         self.current_room = starting_room
         self.starting_room = starting_room
         self.history = []
         self.inventory =[]
-    
+        self.fragments_collected=[]
+
+
 
     def move(self, direction):
            # Vérifiez si la direction est valide
@@ -28,9 +30,22 @@ class Player():
             self.history.append(previous_room)
 
         # Affichez l'historique
-        if self.history:
-            print(self.get_history())
-        return True
+        return self.get_history()
+
+    def open(game, parameters):
+        player = game.player
+
+        # Check if the player has fragments in their inventory
+        expected_fragments = ["Fragment1", "Fragment2", "Fragment3", "Fragment4", "Fragment5", "Fragment6"]
+
+        collected_fragments = [item.name for item in player.inventory]
+
+        if all(fragment in collected_fragments for fragment in expected_fragments):
+            player.current_room.chest_unlocked = True
+            # Unlock the chest and provide rewards
+            return "Vous avez ouvert le coffre et trouvé une récompense !"
+        else:
+            return "Le coffre est verrouillé. Vous avez besoin des fragments en ordre pour l'ouvrir."
         
     
     def get_history(self):
@@ -38,6 +53,7 @@ class Player():
         history_str = "Vous avez déjà visité les pièces suivantes:\n"
         history_str += "\n".join("- " + room.name for room in self.history if room is not None)
         return history_str
+    
     def back(self):
         if len(self.history) > 0:  # Vérifie s'il y a une pièce précédente dans l'historique
             self.current_room = self.history.pop()
