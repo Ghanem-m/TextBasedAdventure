@@ -57,6 +57,7 @@ class Actions:
             player.move(direction)
 
             # Update the GUI with the new room description
+            game.gui.display_current_room_image()
             game.gui.display_message(player.current_room.get_long_description())
             game.gui.display_message(player.get_history())
             return True
@@ -91,7 +92,8 @@ class Actions:
         else:
             print(msg)
 
-        game.finished = True
+        # Schedule the game to be closed after 10 seconds
+        game.gui.after(10000, game.gui.destroy)
         return True
 
     @staticmethod
@@ -165,11 +167,15 @@ class Actions:
                 player.current_room.chest_unlocked = True
                 # Unlock the chest and provide rewards
                 game.gui.display_message("Félicitations {self.player.name}  les six fragments que tu as persévéré à trouver ont fusionné en une clef puissante, ouvrant le mystérieux coffre. En un éclat de lumière, le coffre s'ouvre, révélant son précieux trésor - l'eau de la Fontaine de Jouvence. Ton courage et ta détermination ont triomphé. Grâce à cette eau magique, tu as trouvé la clé de l'éternelle jeunesse. Que cette victoire marque le début d'une nouvelle aventure pleine de découvertes et de merveilles. Bravo, héros, pour avoir conquis La Quête des Fragments du Monde et pour avoir révélé les mystères enfouis dans le coffre légendaire")
+                Actions.quit(game, [])
                 return
             else:
                 game.gui.display_message("Oh malheureux voyageur! Errant parmi les trésors éparpillés, tu as échappé à la règle ! Les objets inattendus, bien que séduisants, ne doivent pas te dévier de ton destin. Les fragments, eux, doivent être récupérés dans une séquence précise pour ne pas briser l’harmonie.")
+                Actions.quit(game, [])
+                return
         else:
-            return "Vous ne pouvez pas ouvrir cela."
+            game.gui.display_message("Vous ne pouvez pas ouvrir cela.")
+            return
 
         success = False  # Replace this with your actual logic
 

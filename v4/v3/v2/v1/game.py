@@ -50,7 +50,7 @@ class Game:
         self.commands["open"]=open_command
         # Setup rooms
 
-        aéroport = Room("aéroport", "à l'aéroport : un carrefour mondial, où des histoires commencent et se terminent.")
+        aéroport = Room("aéroport", "à l'aéroport : un carrefour mondial, où des histoires commencent et se terminent.","\v4\Images\airport.jpg")
         self.rooms.append(aéroport)
         Beyrouth = Room("Beyrouth", "à Beyrouth dans un restaurant animé: lieu festif, mélange de saveurs, de musique et de rires. ")
         self.rooms.append(Beyrouth)
@@ -156,8 +156,8 @@ class Game:
         tech_gadget = Item("Gadget Technologique","Un gadget high-tech dernier cri, symbole de l'innovation constante de Tokyo.")
 
         # Add items to specific rooms
-        aéroport.inventory.append(coffre)
-        aéroport.inventory.append(pagaie)
+        gondole.inventory.append(coffre)
+        gondole.inventory.append(pagaie)
         Beyrouth.inventory.append(fragment4)
         Beyrouth.inventory.append(darbouka)
         Beyrouth.inventory.append(baklava)

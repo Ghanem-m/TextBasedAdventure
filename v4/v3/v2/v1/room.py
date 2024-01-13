@@ -1,14 +1,17 @@
 # Define the Room class.
 from item import Item
+from PIL import Image, ImageTk
+import os
 class Room:
 
     # Define the constructor. 
-    def __init__(self, name, description):
+    def __init__(self, name, description,image_path =None):
         self.name = name
         self.description = description
         self.exits = {}
         self.characters = []
         self.inventory =[]
+        self.image_path = image_path
     # Define the get_exit method.
     def get_exit(self, direction):
         # Return the room in the given direction if it exists.
@@ -43,3 +46,11 @@ class Room:
         items_string = "\n".join(item.name for item in self.inventory) if self.inventory else "Il n'y a rien ici."
         npcs_string = "\nPersonnages présents : " + ", ".join(npc.name for npc in self.characters) if self.characters else ""
         return f"Items in {self.name}:\n{items_string}\n{npcs_string}" if self.inventory or self.characters else "Il n'y a rien ici."
+
+
+    def get_image(self):
+        if self.image_path:
+            image = Image.open(self.image_path)
+            return ImageTk.PhotoImage(image)
+        return None
+

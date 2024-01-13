@@ -1,7 +1,10 @@
 import tkinter as tk
 import tkinter as ttk
 from tkinter import *
+from PIL import Image, ImageTk
+import os
 import customtkinter
+from customtkinter import CTk, CTkFrame, CTkLabel, CTkButton, CTkEntry, CTkTextbox, CTkTabview, CTkOptionMenu, CTkComboBox, CTkInputDialog, CTkRadioButton, CTkProgressBar, CTkSlider, CTkSegmentedButton, CTkSwitch, CTkScrollableFrame, CTkCheckBox, CTkFont
 from room import Room
 from player import Player
 from command import Command
@@ -81,26 +84,25 @@ class GameGUI(tk.Tk):
 
 
     def setup_gui(self):
-        # Create a Toplevel window for the main game
-        self.output_text = tk.Text(self, wrap=tk.WORD, height=20, width=80)
-        self.output_text.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.output_text = CTkTextbox(self, wrap="word", height=50, width=80)
+        self.output_text.pack(side="top", fill="both", expand=True)
 
-        self.line = tk.Frame(self, height=2, bd=1, relief=tk.SUNKEN)
-        self.line.pack(fill=tk.X, pady=5)
+        self.line = CTkFrame(self, height=2)
+        self.line.pack(fill="x", pady=5)
 
-        self.input_entry = tk.Entry(self, width=80)
-        self.input_entry.pack(side=tk.TOP, fill=tk.X)
+        self.input_entry = CTkEntry(self, width=80)
+        self.input_entry.pack(side="top", fill="x")
         self.input_entry.bind("<Return>", self.process_command)
 
-        # Add a Process Command button
-        self.process_button = tk.Button(self, text="Process Command", command=self.process_command)
-        self.process_button.pack(side=tk.TOP, pady=(5, 10))
+        self.process_button = CTkButton(self, text="Process Command", command=self.process_command)
+        self.process_button.pack(side="top", pady=(5, 10))
 
-        self.scrollbar = tk.Scrollbar(self)
+        self.scrollbar = customtkinter.CTkScrollbar(self)
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-        self.output_text.config(yscrollcommand=self.scrollbar.set)
-        self.scrollbar.config(command=self.output_text.yview)
+        self.output_text.configure(yscrollcommand=self.scrollbar.set)
+        self.scrollbar.configure(command=self.output_text.yview)
+
         button_north = Button(self, text="Nord", command=self.move_north, width=10, height=2)
         button_east = Button(self, text="Est", command=self.move_east, width=10, height=2)
         button_south = Button(self, text="Sud", command=self.move_south, width=10, height=2)
@@ -120,15 +122,16 @@ class GameGUI(tk.Tk):
         button_check.pack(side=tk.LEFT)
 
         # Placez les boutons à l'emplacement souhaité
-        button_north.pack(side=tk.LEFT)
-        button_east.pack(side=tk.LEFT)
-        button_south.pack(side=tk.LEFT)
-        button_west.pack(side=tk.LEFT)
-        button_up.pack(side=tk.LEFT)
-        button_down.pack(side=tk.LEFT)
+        button_north.pack(side=tk.RIGHT)
+        button_east.pack(side=tk.RIGHT)
+        button_south.pack(side=tk.RIGHT, anchor="center")
+        button_west.pack(side=tk.RIGHT, anchor="w")
+        button_up.pack(side=tk.RIGHT)
+        button_down.pack(side=tk.RIGHT)
         button_back.pack(side=tk.RIGHT)
 
     def print_welcome(self):
+        self.display_current_room_image()
         airport_description = self.game.player.current_room.get_long_description()
         welcome_message = f"Bienvenue dans ce jeu d'aventure ! {airport_description}\n"
 
@@ -158,6 +161,9 @@ class GameGUI(tk.Tk):
     def run(self):
         self.mainloop()
 
+    def display_current_room_image(self):
+        current_room = self.game.player.current_room
+        image = current_room.get_image()
 
 def main():
     game = Game()
