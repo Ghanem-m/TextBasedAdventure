@@ -12,7 +12,7 @@ from actions import Actions
 from item import Item
 from character import Character
 from game import Game
-from functools import partial
+
 
 
 class GameGUI(tk.Tk):
@@ -95,6 +95,7 @@ class GameGUI(tk.Tk):
 
 
     def setup_gui(self):
+        customtkinter.deactivate_automatic_dpi_awareness()
         self.output_text = CTkTextbox(self, wrap="word", height=40, width=80)
         self.output_text.pack(side="top", fill="both", expand=True)
 
