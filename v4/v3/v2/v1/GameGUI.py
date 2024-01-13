@@ -100,22 +100,6 @@ class GameGUI(tk.Tk):
 
         self.scrollbar = customtkinter.CTkScrollbar(self)
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.image_label = CTkLabel(self)
-        self.image_label.pack(side="top")
-        self.line = customtkinter.CTkFrame(self, height=1)
-        self.line.pack(fill="x", pady=5)
-        # Load the original background image
-        # Load the original background image
-        original_image = Image.open("TBAA.jpg")  # Replace with your image file path
-
-        # Resize the image to your desired dimensions
-        resized_image = original_image.resize((1080, 300))  # Adjust the width and height as needed
-
-        # Create a CTkLabel for the resized background image
-        background_photo = ImageTk.PhotoImage(resized_image)
-        background_label = CTkLabel(self.line, image=background_photo)
-        background_label.image = background_photo  # Keep a reference to avoid garbage collection
-        background_label.pack(fill="both", expand=True)
         self.input_entry = CTkEntry(self, width=80)
         self.input_entry.pack(side="top", fill="x")
         self.input_entry.bind("<Return>", self.process_command)
