@@ -18,7 +18,7 @@ class Game:
         self.commands = {}
         self.characters = []
         self.gui = None
-        self.player = None
+        self.player =None
         self.game_over = False  # Add a game_over flag
 
 
@@ -50,63 +50,180 @@ class Game:
         self.commands["open"]=open_command
         # Setup rooms
 
-        aéroport = Room("aéroport", "à l'aéroport : un carrefour mondial, où des histoires commencent et se terminent.","\v4\Images\airport.jpg")
-        self.rooms.append(aéroport)
-        Beyrouth = Room("Beyrouth", "à Beyrouth dans un restaurant animé: lieu festif, mélange de saveurs, de musique et de rires. ")
-        self.rooms.append(Beyrouth)
-        Venice = Room("Venice", "à Venise sur le pont du Rialto: arc architectural élégant sur le Grand Canal, témoin de la splendeur vénitienne. ")
-        self.rooms.append(Venice)
-        Istanbul = Room("Istanbul", "à Istambul dans un souk: labyrinthe coloré, vibrant de la vie d'Istanbul, où chaque coin raconte une histoire marchande. ")
-        self.rooms.append(Istanbul)
-        NewYork = Room("NewYork", "à New York dans Times Square: nœud animé de lumières, de mouvements et d'activités au cœur de la Grosse Pomme.")
-        self.rooms.append(NewYork)
-        Tokyo = Room("Tokyo", "à Tokyo dans un temple: un sanctuaire silencieux, gardien de traditions millénaires, où les samouraïs illustrent l'harmonie entre le passé et le présent.")
-        self.rooms.append(Tokyo)
-        Barcelone = Room("Barcelone", "à Barcelone dans un bar à tapas: ambiance vibrante, épicentre des saveurs espagnoles, où les tapas se partagent joyeusement.")
-        self.rooms.append(Barcelone)
-        Moscou = Room("Moscou", "à Moscou sur la place Rouge: centre historique entouré d'architecture imposante et de traditions russes.")
-        self.rooms.append(Moscou)
-        Paris = Room("Paris", "à Paris dans une boulangerie d'un grand pâtissier: doux refuge de délices parisiens, où les senteurs du pain fraîchement cuit enrobent l'air.")
-        self.rooms.append(Paris)
-        Caire = Room("Caire", "au Caire dans le désert : étendue infinie de sable, berceau des pyramides, enveloppée dans un silence ancien. ")
-        self.rooms.append(Caire)
-        statutdeliberte = Room("Statue de la liberté", "sur la statue de la Liberté: majestueuse sentinelle de la liberté, levant fièrement sa torche au cœur de New York. ")
+        aeroport = Room("aéroport","à l'aéroport : un carrefour mondial, où des histoires commencent et se terminent.\n"
+                        "                      ___\n"
+                        "                      \\\\ \\\n"
+                        "                       \\\\ `\\\n"
+                        "    ___                 \\\\  \\\n"
+                        "   |    \\                \\\\  `\\\n"
+                        "   |_____\\                \\    \\\n"
+                        "   |______\\                \\    `\\\n"
+                        "   |       \\                \\     \\\n"
+                        "   |      __\\__---------------------------------._.\n"
+                        " __|---~~~__o_o_o_o_o_o_o_o_o_o__[][\__   \n"
+                        "|___                         /~      )                \\__\n"
+                        "    ~~~---..._______________/      ,/_______/\n"
+                        "                           /      /\n"
+                        "                          /     ,/\n"
+                        "                         /     ,/\n"
+                        "                        /    ,/\n"
+                        "                       /    /\n"
+                        "                      //  ,/\n"
+                        "                     //  /\n"
+                        "                    // ,/\n"
+                        "                   //_/\n")
+
+        self.rooms.append(aeroport)
+        beyrouth = Room("Beyrouth", "à Beyrouth dans un restaurant animé: lieu festif, mélange de saveurs, de musique et de rires. ")
+        self.rooms.append(beyrouth)
+        venice = Room("Venice",
+                      "à Venise sur le pont du Rialto: arc architectural élégant sur le Grand Canal, témoin de la splendeur vénitienne. \n"
+                      "                                                      ~.   \n"
+                      "                       Ya...|_..aab     .   .         \n"
+                      "                          Y88a  Y88o  Y88a   (     )        \n"
+                      "                          Y88b  Y88b  Y88b   `.oo'\n"
+                      "                          :888  :888  :888  ( (`-'\n"
+                      "                  .---.    d88P  d88P  d88P   ..\n"
+                      "               / .-._)  d8P----|----Y8P      ..   \n"
+                      "               ( (`._) .-.  .-. |.-.  .-.  .-.   ) )   \n"
+                      "               \ `---( O )( O )( O )( O )( O )-' /    \n"
+                      "                   `.    `-'  `-'  `-'  `-'  `-'  .'    \n"
+                      "               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)\n")
+        self.rooms.append(venice)
+        istanbul = Room("Istanbul",
+                        "à Istambul dans un souk: labyrinthe coloré, vibrant de la vie d'Istanbul, où chaque coin raconte une histoire marchande. \n"
+                        "                                       @\_/@                        \n"
+                        "                                     @|XXXXXXXX |                    \n"
+                        "                                    @ |X||    X |                    \n"
+                        "                                   @  |X||    X |                              \n"
+                        "                                  @   |XXXXXXXX |\n"
+                        "                                 @    |X||    X |             \n"
+                        "                                @     |X||   .X |\n"
+                        "                               @      |X||.  .X |                      \n"
+                        "                              @      |%XXXXXXXX%||\n"
+                        "                            @        |X||  . . X||\n"
+                        "                                     |X||   .. X||                               @     @\n"
+                        "                                     |X||  .   X||.                              ||====%\n"
+                        "                                     |X|| .    X|| .                             ||    %\n"
+                        "                                     |X||.     X||   .                           ||====%\n"
+                        "                                    |XXXXXXXXXXXX||     .                        ||    %\n"
+                        "                                    |XXXXXXXXXXXX||         .                 .  ||====% .\n"
+                        "                                    |XX|        X||                .        .    ||    %  .\n"
+                        "                                    |XX|        X||                   .          ||====%   .\n"
+                        "                                    |XX|        X||              .          .    ||    %     .\n"
+                        "                                    |XX|======= X||============================+ || .. %  ........\n"
+                        "                                ===== /            X||                              ||    %\n"
+                        "                                                X||           /)                 ||    %\n"
+                        "                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~)\n")
+        self.rooms.append(istanbul)
+        newyork = Room("NewYork",
+                       "à New York dans Times Square: nœud animé de lumières, de mouvements et d'activités au cœur de la Grosse Pomme.\n"
+                       "                                               \n "
+                       "                         (_)                     \n "
+                       "                         ###       .             \n "
+                       "                        (#c    _\|/_           \n "
+                       "                         #\     wWWWw            \n "
+                       "                         \ \-. (/. .\)           \n "
+                       "                         /\ /`\/\   /\           \n "
+                       "                         |\/   \) (|            \n "
+                       "                         `\.' ; ; ' ;\           \n "
+                       "                         `\;  ;    .  ;/\          \n "
+                       "                             `\;    ;  ;|  \       \n "
+                       "                            ;   .'  ' ;  /         \n "
+                       "                            |_.'   ;  | /)        \n "
+                       "                             (     ''._;/`        \n "
+                       "                            |    ' . ;            \n "
+                       "                            |.-'   .:)            \n "
+                       "                            |        |            \n "
+                       "                            (  .'  : |            \n "
+                       "                            |,-  .:: |           \n "
+                       "                            | ,-'  .;|            \n "
+                       "                           /,.:\_         \n "
+                       "                           [I_I_I_I_I_I_]      \n "
+                       "                           | __________ |    \n "
+                       "                           | || |  | || |     \n "
+                       "                          | |||||| |      \n "
+                       "                         /=--------------=\    \n "
+                       "                        /                  \    \n "
+                       "                       |             \n ")
+        self.rooms.append(newyork)
+        tokyo = Room("Tokyo", "à Tokyo dans un temple: un sanctuaire silencieux, gardien de traditions millénaires, où les samouraïs illustrent l'harmonie entre le passé et le présent.")
+        self.rooms.append(tokyo)
+        barcelone = Room("Barcelone", "à Barcelone dans un bar à tapas: ambiance vibrante, épicentre des saveurs espagnoles, où les tapas se partagent joyeusement.")
+        self.rooms.append(barcelone)
+        moscou = Room("moscou", "à Moscou sur la place Rouge: centre historique entouré d'architecture imposante et de traditions russes.")
+        self.rooms.append(moscou)
+        paris = Room("Paris","à Paris dans une boulangerie d'un grand pâtissier: doux refuge de délices parisiens, où les senteurs du pain fraîchement cuit enrobent l'air. \n"
+            "           ^\n"
+            "           |\n"
+            "           +\n"
+            "           |\n"
+            "           |\n"
+            "           |\n"
+            "           |\n"
+            "           |\n"
+            "          A\n"
+            "         ===                               ________\n"
+            "        /EEE\\                             |______|\n"
+            "       //EEE\\\\                           |*(  )*|         \n"
+            "___//_____\\\\_____________|O|  |O|_______\n")
+
+        self.rooms.append(paris)
+
+        caire = Room("Caire", "au Caire dans le désert : étendue infinie de sable, berceau des pyramides, enveloppée dans un silence ancien. \n"
+                              "                 /=\\ \n"
+                              "                /===\ \    \n"
+                              "               /=====\' \    \n"
+                              "              /=======\'' \  \n"
+                              "             /=========\ ' '\   \n"
+                              "            /===========\''   \     \n"
+                              "           /=============\ ' '  \    \n"
+                              "          /===============\   ''  \   \n"
+                              "         /=================\' ' ' ' \     \n"
+                              "        /===================\' ' '  ' \    \n"
+                              "       /=====================\' '   ' ' \   \n"
+                              "      /=======================\  '   ' /   \n"
+                              "     /=========================\   ' /  \n"
+                              "    /===========================\'  /    \n"
+                              "   /=============================\/        \n")
+        self.rooms.append(caire)
+        statutdeliberte = Room("Statue de la liberté", "sur la statue de la Liberté: majestueuse sentinelle de la liberté, levant fièrement sa torche au cœur de New York.")
         self.rooms.append(statutdeliberte)
         gondole = Room("gondole", "dans une gondole: embarcation élégante sillonnant les canaux de Venise, portant avec elle l'esprit romantique de la ville.")
         self.rooms.append(gondole)
         pyramide = Room("pyramide", "dans une pyramide: un labyrinthe mystique d'antichambres secrètes et de passages cachés, où les échos du passé résonnent et les hiéroglyphes racontent des légendes oubliées.")
         self.rooms.append(pyramide)
-        Fuji = Room("Mont Fuji", "au Mont Fuji: pic majestueux dominant le paysage japonais, source d'inspiration artistique et spirituelle depuis des siècles.")
-        self.rooms.append(Fuji)
+        fuji = Room("Mont Fuji", "au Mont Fuji: pic majestueux dominant le paysage japonais, source d'inspiration artistique et spirituelle depuis des siècles.")
+        self.rooms.append(fuji)
         # Setup characters qui donnent indices
-        le_chat_bleu = Character("Le Chat Bleu", "un chat mystérieux", aéroport, ["Bienvenue à toi jeune voyageur! Tu a été choisi pour une quête extraordinaire. Tu devras récupérer six fragments à travers le monde pour forger une clef. Chaque fragment que tu découvriras te rapprochera du trésor final, un mystérieux coffre scellé. Cependant, le chemin vers le coffre reste caché, c’est à toi seul de le trouver. A chaque endroit où se trouve un fragment, une personne du pays te donnera un indice qui t’amènera au fragment suivant. Voici ton premier indice : ton périple commence là où la flamme de la liberté danse face au vent. Trouve l'île où les rêves s'envolent vers le ciel pour découvrir le premier fragment. Bonne chance, aventurier ! Que l'aventure commence!"])
+        le_chat_bleu = Character("Le Chat Bleu", "un chat mystérieux", aeroport, ["Bienvenue à toi jeune voyageur! Tu a été choisi pour une quête extraordinaire. Tu devras récupérer six fragments à travers le monde pour forger une clef. Chaque fragment que tu découvriras te rapprochera du trésor final, un mystérieux coffre scellé. Cependant, le chemin vers le coffre reste caché, c’est à toi seul de le trouver. A chaque endroit où se trouve un fragment, une personne du pays te donnera un indice qui t’amènera au fragment suivant. Voici ton premier indice : ton périple commence là où la flamme de la liberté danse face au vent. Trouve l'île où les rêves s'envolent vers le ciel pour découvrir le premier fragment. Bonne chance, aventurier ! Que l'aventure commence!"])
 
-        Will = Character("Will", "l’américain", NewYork, ["Hello ! Cherche le lieu où l'aube caresse des sommets majestueux, comme si elle éveillait des vagues de montagnes. Là-bas, dans cette terre où les sakuras fleurissent, tu découvriras le fragment suivant, caché sous l'ombre d’une majesté silencieuse."])
-        Xiao = Character("Xiao", "le japonais", Tokyo, ["Konnichiwa! Pour poursuivre ta quête, envole-toi vers la ville où l'amour flotte dans l'air, et les lumières de la tour brillent de mille feux. C'est là que le prochain fragment t'attend. "])
-        Léa = Character("Léa", "la française", Paris, ["Bonjour! Cherche le lieu où l'Orient rencontre l'Occident. Trouve la porte vers l'Est méditerranéen où les saveurs exotiques dansent avec les parfums de l'histoire ancienne et tu découvriras le chemin vers le prochain fragment."])
-        Elias = Character("Elias", "le libanais", Beyrouth, [" Ahlan wa sahlan ! Pour approcher le prochain fragment, suis la trace des civilisations anciennes. Cherche le lieu où les mystères du passé te guideront vers une terre ensoleillée où des constructions millénaires se dressent comme des énigmes à dévoiler. Là-bas, au cœur de l'antiquité, ton voyage continuera dans les profondeurs des secrets bien gardés."])
-        Cleo = Character("Cleo", "l’égyptienne", Caire, ["Marhaban ! Au cœur de ce désert rempli d’histoire, ta quête touche à sa fin. Cherche le lieu où les ombres du passé convergent vers une terre hispanique de passion et de fête, où les œuvres humaines rivalisent avec la grandeur des étoiles. Ton ultime fragment t'attend dans une cité célèbre pour son architecture extraordinaire et son ambiance vibrante. "])
-        Camille=Character("Camille","l'exploratrice intrépide",Fuji,["Salutations ! Si vous cherchez le prochain indice, aventurez-vous là où les brises légères caressent les cerisiers en fleurs. Dans cette terre où les sakuras s'épanouissent, vous découvrirez le fragment caché sous l'ombre d'une majesté silencieuse."])
+        Will = Character("Will", "l’américain", newyork, ["Hello ! Cherche le lieu où l'aube caresse des sommets majestueux, comme si elle éveillait des vagues de montagnes. Là-bas, dans cette terre où les sakuras fleurissent, tu découvriras le fragment suivant, caché sous l'ombre d’une majesté silencieuse."])
+        Xiao = Character("Xiao", "le japonais", tokyo, ["Konnichiwa! Pour poursuivre ta quête, envole-toi vers la ville où l'amour flotte dans l'air, et les lumières de la tour brillent de mille feux. C'est là que le prochain fragment t'attend. "])
+        Léa = Character("Léa", "la française", paris, ["Bonjour! Cherche le lieu où l'Orient rencontre l'Occident. Trouve la porte vers l'Est méditerranéen où les saveurs exotiques dansent avec les parfums de l'histoire ancienne et tu découvriras le chemin vers le prochain fragment."])
+        Elias = Character("Elias", "le libanais", beyrouth, [" Ahlan wa sahlan ! Pour approcher le prochain fragment, suis la trace des civilisations anciennes. Cherche le lieu où les mystères du passé te guideront vers une terre ensoleillée où des constructions millénaires se dressent comme des énigmes à dévoiler. Là-bas, au cœur de l'antiquité, ton voyage continuera dans les profondeurs des secrets bien gardés."])
+        Cleo = Character("Cleo", "l’égyptienne", caire, ["Marhaban ! Au cœur de ce désert rempli d’histoire, ta quête touche à sa fin. Cherche le lieu où les ombres du passé convergent vers une terre hispanique de passion et de fête, où les œuvres humaines rivalisent avec la grandeur des étoiles. Ton ultime fragment t'attend dans une cité célèbre pour son architecture extraordinaire et son ambiance vibrante. "])
+        Camille=Character("Camille","l'exploratrice intrépide",fuji,["Salutations ! Si vous cherchez le prochain indice, aventurez-vous là où les brises légères caressent les cerisiers en fleurs. Dans cette terre où les sakuras s'épanouissent, vous découvrirez le fragment caché sous l'ombre d'une majesté silencieuse."])
         # Setup characters qui bougent dans la map
-        Maria = Character("Maria", "l’espagnole", Barcelone, ["Hola ! Soy Maria, une Barcelonaise passionnée de cuisine. Mes journées sont rythmées par le parfum des tapas, les couleurs du marché de La Boqueria et les doux sons du flamenco. J'adore me promener le long de la plage et savourer une bonne paella. Si tu veux des conseils pour dénicher les meilleures saveurs de Barcelone, n'hésite pas !"])
-        Mario = Character("Mario", "l’italien", Venice, ["Ciao! Sono Mario, un Vénitien naviguant à travers les canaux de cette ville magnifique. Mes journées sont remplies de gondoles, de masques vénitiens et d'une bonne dose de café italien. J'adore partager les histoires de cette ville unique et secrète. Si tu veux savoir où trouver les meilleurs cicchetti ou simplement discuter, sono qui!"])
-        Volodimir = Character("Volodimir", "le russe", Moscou, ["Privet ! Je suis Volodimir, un amoureux de l'histoire de ma ville. Mes journées se déroulent au son des cloches des églises et parmi les pages de livres anciens. Né à Moscou, j'aime me promener dans les vastes parcs et profiter de l'architecture impressionnante. Si tu veux en savoir plus sur la vie à Moscou, n'hésite pas à me demander!"])
-        Ozan = Character("Ozan", "le turc", Istanbul, ["Merhaba! Je suis Ozan, un passionné de musique et d'aventure. Mes journées sont une symphonie entre les ruelles animées du Grand Bazar, les rives du Bosphore et les sons envoûtants du saz. Né à Istanbul, je trouve toujours de nouvelles mélodies dans cette ville fascinante. Si tu veux partager des histoires ou simplement discuter, je suis là pour toi!"])
+        Maria = Character("Maria", "l’espagnole", barcelone, ["Hola ! Soy Maria, une Barcelonaise passionnée de cuisine. Mes journées sont rythmées par le parfum des tapas, les couleurs du marché de La Boqueria et les doux sons du flamenco. J'adore me promener le long de la plage et savourer une bonne paella. Si tu veux des conseils pour dénicher les meilleures saveurs de Barcelone, n'hésite pas !"])
+        Mario = Character("Mario", "l’italien", venice, ["Ciao! Sono Mario, un Vénitien naviguant à travers les canaux de cette ville magnifique. Mes journées sont remplies de gondoles, de masques vénitiens et d'une bonne dose de café italien. J'adore partager les histoires de cette ville unique et secrète. Si tu veux savoir où trouver les meilleurs cicchetti ou simplement discuter, sono qui!"])
+        Volodimir = Character("Volodimir", "le russe", moscou, ["Privet ! Je suis Volodimir, un amoureux de l'histoire de ma ville. Mes journées se déroulent au son des cloches des églises et parmi les pages de livres anciens. Né à Moscou, j'aime me promener dans les vastes parcs et profiter de l'architecture impressionnante. Si tu veux en savoir plus sur la vie à Moscou, n'hésite pas à me demander!"])
+        Ozan = Character("Ozan", "le turc", istanbul, ["Merhaba! Je suis Ozan, un passionné de musique et d'aventure. Mes journées sont une symphonie entre les ruelles animées du Grand Bazar, les rives du Bosphore et les sons envoûtants du saz. Né à Istanbul, je trouve toujours de nouvelles mélodies dans cette ville fascinante. Si tu veux partager des histoires ou simplement discuter, je suis là pour toi!"])
 
-        aéroport.characters.append(le_chat_bleu)
-        Istanbul.characters.append(Ozan)
-        Fuji.characters.append(Camille)
-        Moscou.characters.append(Volodimir)
-        Barcelone.characters.append(Maria)
-        Beyrouth.characters.append(Elias)
-        NewYork.characters.append(Will)
-        Caire.characters.append(Cleo)
-        Tokyo.characters.append(Xiao)
-        Paris.characters.append(Léa)
-        Venice.characters.append(Mario)
+        aeroport.characters.append(le_chat_bleu)
+        istanbul.characters.append(Ozan)
+        fuji.characters.append(Camille)
+        moscou.characters.append(Volodimir)
+        barcelone.characters.append(Maria)
+        beyrouth.characters.append(Elias)
+        newyork.characters.append(Will)
+        caire.characters.append(Cleo)
+        tokyo.characters.append(Xiao)
+        paris.characters.append(Léa)
+        venice.characters.append(Mario)
         # Setup Items
 
-        # NeW York
+        # New York
         fragment1 = Item("Fragment1", "Morceau mystérieux")
         flambeau = Item("Flambeau","Torche emblématique de la Statue de la Liberté, symbole de lumière, liberté, et exploration ")
         # Mont Fuji
@@ -124,11 +241,9 @@ class Game:
         # LeCaire
         scorpion = Item("Scorpion", "Un petit scorpion, rappelant le désert et ses créatures mystérieuses.")
         serpent = Item("Serpent", "Un serpent, symbole de sagesse et de mystère.")
-        lampe_d_Aladin = Item("Lampe d’Aladin", "Une lampe magique, prête à exaucer des vœux .")
         # Pyramide
         fragment5 = Item("Fragment5", "Morceau mystérieux")
         momie = Item("Momie", "Une momie ancienne, gardienne de secrets enfouis depuis des siècles. ")
-        trésor = Item("Trésor", "Un coffre au trésor scellé, promettant richesse et aventures.")
         amulette = Item("Amulette", "Un talisman mystique, porteur de bonnes énergies et de protections. ")
         # Barcelone
         fragment6 = Item("Fragment6", "Morceau mystérieux")
@@ -136,13 +251,12 @@ class Game:
         churros_con_chocolate = Item("Churros con chocolate","Délicieux beignets espagnols accompagnés d'une riche sauce au chocolat. ")
         tapas = Item("Tapas", "Une variété de petites bouchées espagnoles, offrant une explosion de saveurs.")
         # Venise
-        masque_vénitien = Item("Masque vénitien","Un masque élaboré, utilisé lors du carnaval vénitien, porteur de mystère et de grâce.")
+
         chapeau = Item("Chapeau", "Un chapeau élégant, reflétant le style et la personnalité de son porteur.")
         # Gondole
         coffre = Item("Coffre", "Un coffre mystérieux, renfermant des secrets et des richesses inconnues.")
         pagaie = Item("Pagaie", "Une pagaie, prête à être utilisée pour naviguer sur des eaux inexplorées. ")
         # Moscou
-        poupées_russe = Item("Poupées russe", "Une série de poupées emboîtées, cachant des surprises à chaque ouverture. ")
         chapka = Item("Chapka", "Un chapeau russe traditionnel, conçu pour affronter les hivers rigoureux.")
         # Istanbul
         loukoum = Item("Loukoum", "Des délices turcs, doux et parfumés, éveillant les papilles.")
@@ -150,71 +264,69 @@ class Game:
         bijoux = Item("Bijoux", "Des parures étincelantes, témoins de l'élégance et de la richesse.")
         assiettes = Item("Assiettes", "Des assiettes décoratives, portant des motifs artistiques et culturels. ")
         #Tokyo
-        ramen_bowl = Item("Bol de Ramen", "Un bol débordant de ramen délicieusement parfumé, une spécialité tokyoïte.")
-        manga_collection = Item("Collection de Manga","Une collection variée de mangas, représentant la richesse de la culture pop à Tokyo.")
         sakura_bonsai = Item("Bonsaï de Sakura","Un magnifique bonsaï de sakura en fleurs, capturant l'essence de la saison des cerisiers en fleurs.")
         tech_gadget = Item("Gadget Technologique","Un gadget high-tech dernier cri, symbole de l'innovation constante de Tokyo.")
 
         # Add items to specific rooms
         gondole.inventory.append(coffre)
         gondole.inventory.append(pagaie)
-        Beyrouth.inventory.append(fragment4)
-        Beyrouth.inventory.append(darbouka)
-        Beyrouth.inventory.append(baklava)
-        Venice.inventory.append(masque_vénitien)
-        Venice.inventory.append(chapeau)
-        Istanbul.inventory.append(loukoum)
-        Istanbul.inventory.append(bijoux)
-        Istanbul.inventory.append(assiettes)
-        Istanbul.inventory.append(vase_ancien)
-        Caire.inventory.append(scorpion)
-        Caire.inventory.append(serpent)
+        beyrouth.inventory.append(fragment4)
+        beyrouth.inventory.append(darbouka)
+        beyrouth.inventory.append(baklava)
+        venice.inventory.append(chapeau)
+        istanbul.inventory.append(loukoum)
+        istanbul.inventory.append(bijoux)
+        istanbul.inventory.append(assiettes)
+        istanbul.inventory.append(vase_ancien)
+        caire.inventory.append(scorpion)
+        caire.inventory.append(serpent)
         pyramide.inventory.append(momie)
-        pyramide.inventory.append(trésor)
         pyramide.inventory.append(amulette)
-        Tokyo.inventory.append(sakura_bonsai)
-        Tokyo.inventory.append(tech_gadget)
-        Paris.inventory.append(baguette)
-        Paris.inventory.append(croissant)
-        Paris.inventory.append(macaron)
-        Paris.inventory.append(fragment3)
-        NewYork.inventory.append(fragment1)
-        NewYork.inventory.append(flambeau)
-        Barcelone.inventory.append(paella)
-        Barcelone.inventory.append(churros_con_chocolate)
-        Barcelone.inventory.append(tapas)
-        Barcelone.inventory.append(fragment6)
-        Moscou.inventory.append(poupées_russe)
-        Moscou.inventory.append(chapka)
-        Fuji.inventory.append(fragment2)
-        Fuji.inventory.append(fleur_de_sakura)
+        tokyo.inventory.append(sakura_bonsai)
+        tokyo.inventory.append(tech_gadget)
+        paris.inventory.append(baguette)
+        paris.inventory.append(croissant)
+        paris.inventory.append(macaron)
+        paris.inventory.append(fragment3)
+        newyork.inventory.append(fragment1)
+        newyork.inventory.append(flambeau)
+        barcelone.inventory.append(paella)
+        barcelone.inventory.append(churros_con_chocolate)
+        barcelone.inventory.append(tapas)
+        barcelone.inventory.append(fragment6)
+        moscou.inventory.append(chapka)
+        fuji.inventory.append(fragment2)
+        fuji.inventory.append(fleur_de_sakura)
         pyramide.inventory.append(fragment5)
         # Create exits for rooms
 
-        aéroport.exits = {"N": Paris, "E": Beyrouth, "S": Barcelone, "O": NewYork, "U": None, "D": None}
-        Paris.exits = {"N": None, "E": Moscou, "S": aéroport, "O": None, "U": None, "D": None}
-        Barcelone.exits = {"N": aéroport, "E": Venice, "S": None, "O": None, "U": None, "D": None}
-        Venice.exits = {"N": None, "E": None, "S": None, "O": Barcelone, "D": gondole, "U": None}
-        Beyrouth.exits = {"N": Istanbul, "E": Tokyo, "S": Caire, "O": aéroport, "U": None, "D": None}
-        Istanbul.exits = {"N": Moscou, "E": None, "S": Beyrouth, "O": None, "U": None, "D": None}
-        Moscou.exits = {"N": None, "E": None, "S": Istanbul, "O": Paris, "U": None, "D": None}
-        NewYork.exits = {"N": None, "E": aéroport, "S": None, "O": Tokyo, "U": statutdeliberte, "D": None}
-        Tokyo.exits = {"N": None, "E": NewYork, "S": None, "O": Paris, "U": Fuji, "D": None}
-        Caire.exits = {"N": Beyrouth, "E": None, "S": None, "O": None, "U": None, "D": pyramide}
-        statutdeliberte.exits = {"U": None, "D": NewYork, "N": None, "E": None, "S": None, "O": None}
-        gondole.exits = {"D": None, "U": Venice, "N": None, "E": None, "S": None, "O": None}
-        pyramide.exits = {"D": None, "U": Caire, "N": None, "E": None, "S": None, "O": None}
-        Fuji.exits = {"N": None, "E": None, "S": None, "O": None, "U": None, "D": Tokyo}
+        aeroport.exits = {"N": paris, "E": beyrouth, "S": barcelone, "O": newyork, "U": None, "D": None}
+        paris.exits = {"N": None, "E": moscou, "S": aeroport, "O": None, "U": None, "D": None}
+        barcelone.exits = {"N": aeroport, "E": venice, "S": None, "O": None, "U": None, "D": None}
+        venice.exits = {"N": None, "E": None, "S": None, "O": barcelone, "D": gondole, "U": None}
+        beyrouth.exits = {"N": istanbul, "E": tokyo, "S": caire, "O": aeroport, "U": None, "D": None}
+        istanbul.exits = {"N": moscou, "E": None, "S": beyrouth, "O": None, "U": None, "D": None}
+        moscou.exits = {"N": None, "E": None, "S": istanbul, "O": paris, "U": None, "D": None}
+        newyork.exits = {"N": None, "E": aeroport, "S": None, "O": tokyo, "U": statutdeliberte, "D": None}
+        tokyo.exits = {"N": None, "E": newyork, "S": None, "O": paris, "U": fuji, "D": None}
+        caire.exits = {"N": beyrouth, "E": None, "S": None, "O": None, "U": None, "D": pyramide}
+        statutdeliberte.exits = {"U": None, "D": newyork, "N": None, "E": None, "S": None, "O": None}
+        gondole.exits = {"D": None, "U": venice, "N": None, "E": None, "S": None, "O": None}
+        pyramide.exits = {"D": None, "U": caire, "N": None, "E": None, "S": None, "O": None}
+        fuji.exits = {"N": None, "E": None, "S": None, "O": None, "U": None, "D": tokyo}
 
         # Setup player and starting room
         self.player = Player("Player")  # No need to ask for player name in the console
-        self.player.current_room = aéroport
+        self.player.current_room = aeroport
 
+    def set_player_name(self, name):
+        self.player.name = name
     def get_room_by_name(self, room_name):
         for room in self.rooms:
             if room.name == room_name:
                 return room
         return None
+
 
     def set_game_gui(self, gui):
         self.gui = gui

@@ -84,6 +84,7 @@ class Actions:
             return False
 
         player = game.player
+        player_name = player.name
         msg = f"\nMerci {player.name} d'avoir joué. Au revoir.\n"
 
         # Check if the game has a gui instance and use it to display the message
@@ -204,7 +205,7 @@ class Actions:
             player.current_room.inventory.remove(item)
 
             # Update the GUI with the message
-            game.gui.display_message(f"\nVous avez pris : {item.name}\n")
+            game.gui.display_message(f"\nVous avez pris : {item.name}\n{item.description}")
             return True
         else:
             print(f"\nL'objet '{item_name}' n'est pas dans cette pièce.\n")

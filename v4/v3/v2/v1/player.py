@@ -11,7 +11,6 @@ class Player():
         self.fragments_collected=[]
 
 
-
     def move(self, direction):
            # Vérifiez si la direction est valide
         if direction not in self.current_room.exits or self.current_room.exits[direction] is None:

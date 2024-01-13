@@ -5,13 +5,13 @@ import os
 class Room:
 
     # Define the constructor. 
-    def __init__(self, name, description,image_path =None):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
         self.exits = {}
         self.characters = []
         self.inventory =[]
-        self.image_path = image_path
+
     # Define the get_exit method.
     def get_exit(self, direction):
         # Return the room in the given direction if it exists.
@@ -48,9 +48,4 @@ class Room:
         return f"Items in {self.name}:\n{items_string}\n{npcs_string}" if self.inventory or self.characters else "Il n'y a rien ici."
 
 
-    def get_image(self):
-        if self.image_path:
-            image = Image.open(self.image_path)
-            return ImageTk.PhotoImage(image)
-        return None
 
