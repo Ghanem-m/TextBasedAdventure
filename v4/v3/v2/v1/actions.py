@@ -57,7 +57,6 @@ class Actions:
             player.move(direction)
 
             # Update the GUI with the new room description
-            game.gui.display_current_room_image()
             game.gui.display_message(player.current_room.get_long_description())
             game.gui.display_message(player.get_history())
             return True

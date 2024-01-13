@@ -170,11 +170,6 @@ class GameGUI(tk.Tk):
             self.output_text.insert(tk.END, str(message) + "\n")
             self.output_text.yview(tk.END)
 
-    def display_current_room_image(self):
-        current_room = self.game.player.current_room
-        image_filename = current_room.get_image()
-        image_path = os.path.join(os.path.dirname(__file__), image_filename)
-        self.display_image(image_path)
 
     def display_history(self):
         history_message = self.get_history()
@@ -183,17 +178,7 @@ class GameGUI(tk.Tk):
     def run(self):
         self.mainloop()
 
-    def display_current_room_image(self):
-        current_room = self.game.player.current_room
 
-
-    def display_image(self, image_path):
-        if image_path:
-            image = Image.open(image_path)
-            photo = ImageTk.PhotoImage(image)
-            self.image_label = CTkLabel(self, image=photo)
-            self.image_label.photo = photo
-            self.image_label.pack(side="top")
 def main():
 
     game = Game()
@@ -202,7 +187,7 @@ def main():
     game.setup()
     game.print_welcome()
     gui.run()
-    gui.display_current_room_image()
+
 
 if __name__ == "__main__":
     main()
